@@ -5,7 +5,7 @@
             height: '@',
             width: '@',
         },
-        template: '<div style="position:relative; height:400px; width:660px"></div>',
+        template: '<div style="position:relative;" ng-style={height: height, width: width}"></div>',
         require: "^groupSort",
         restrict: 'E',
         replace: true,
