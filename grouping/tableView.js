@@ -65,7 +65,7 @@
 
             $compile(element.contents())(scope);
         },
-        controller: function ($scope, $element, $attrs, MessageItemSelected) {
+        controller: function ($scope, $element, $attrs) {
 
             $scope.clickEvent = function (event) {
 
