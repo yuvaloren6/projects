@@ -1,6 +1,6 @@
 ﻿/// <reference path="bower_components/angular/angular.js" />
 
-angular.module('universalAngularSelect', ['angular-revive', 'angular-groupSort'])
+angular.module('universalAngularSelect', ['angular-revive', 'angular-groupSort', 'ui.bootstrap'])
 .directive('fancyCombobox', function () {
     return {
         scope : {
