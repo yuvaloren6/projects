@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Projects by Yuval Oren</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,275 +16,312 @@
 
     <script src="grouping/angular-groupsort.js"></script>
     <script src="grouping/grouping-directive.js"></script>
+    <script src="grouping/tableView.js"></script>
     <script src="grouping/groupsort-demo.js"></script>
 
     <script src="UniversalSelect/fancyCombobox.js"></script>
+    <script src="UniversalSelect/starCombobox.js"></script>
     <script src="UniversalSelect/universalselect-demo.js"></script>
 
     <script src="projects.js"></script>
 
 </head>
-        <body ng-app="myProjects" style="margin-top:10px;">
-            <a style="margin-left:50px;" href="https://yuvaloren6.github.io/angular-revive">Angular Revive</a>
-            <a style="margin-left:50px;" href="https://yuvaloren6.github.io/angular-groupSort">Angular-GroupSort</a>
-            <div class="pageHeader" style="margin-top:10px;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <h1 style="color:red">Revive</h1>
+<body ng-app="myProjects" style="margin-top:10px;">
+    <a style="margin-left:50px;" href="https://yuvaloren6.github.io/angular-revive">Angular Revive</a>
+    <a style="margin-left:50px;" href="https://yuvaloren6.github.io/angular-groupSort">Angular-GroupSort</a>
+    <div class="pageHeader" style="margin-top:10px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2">
+                    <h1 style="color:red">Revive</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 pull-left">
+                    <h1 style="color:gold">Group and Sort</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 style="color: black; font-weight:bold">Universal Angular Select</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <section ng-controller="reviveDemoController">
+            <div class="row" style="margin-top:30px">
+                <div class="col-xs-12">
+                    <h1>Revive</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Turn any clickable surface in you html into a select-like control</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>
+                        <em>Revive</em> is a transcluding directive that enables you to turn any clickable surface in you html into a select-like control with the
+                        addition of a few events. <em>Revive</em> is ng-model enabled directive, so it is easy to incorporate it into the application model.
+                        Other capabilities of the directive are:
+                        <ul>
+                            <li>
+                                Control over the mode of operation (single or multiple selection) and in multiple selections mode you can limit
+                                the number of selections.
+                            </li>
+                            <li>
+                                Disable regions of the view by feeding a list of regions IDs to the directive. The list is instantly broadcast to
+                                all descendents - giving them the chance to disable / enable themselves.
+                            </li>
+                            <li>
+                                Reset the the directive and its transcluded directive from the model. If you need to start over, simply nudge the
+                                directive through its reset property.
+                            </li>
+                        </ul>
+                    </p>
+                    <p>
+                        Below is a simple implementation of the <em>Revive</em> directive. With the implementation of a few (4) events, it brings to live a
+                        collection of div elements that, orchestrated by <em>Revive</em>, exhibits a select-like behavior.
+                    </p>
+                </div>
+            </div>
+            <div class="row pushDown">
+                <div class="col-xs-3">
+                    <p style="margin-top: 25px; font-size:x-large">Selected regions:</p>
+                    <p style="font-size:x-large">{{mapSelections}}</p>
+                    <p style="margin-top: 25px; font-size:x-large">Number of selections: {{maxSelections}}</p>
+                </div>
+                <div class="col-xs-3">
+                    <div class="map-div">
+                        <div revive ng-model="mapSelections" disabled-items="disableMapRegions" reset-select="{{resetMap}}" multiple="{{maxSelections}}">
+                            <div ng-controller="mapController" class="map-region {{enabledStateClass}} {{selectedStateClass}}" ng-repeat="location in locations"
+                                 data-id="location.location"
+                                 ng-style="{left:location.left, top:location.top }"
+                                 ng-click="clickEvent($event, location.location)">
+                                <div class="mapRegionTitle">
+                                    {{location.location}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-6 pull-left">
-                            <h1 style="color:gold">Group and Sort</h1>
+                </div>
+                <div class="col-xs-1">
+                    <div class="btn-group-vertical">
+                        <label class="btn btn-primary" ng-model="radioModel" ng-click="radioClick($event, 1)" uib-btn-radio="'select1'">select 1</label>
+                        <label class="btn btn-primary" style="margin-top:27px;" ng-model="radioModel" ng-click="radioClick($event, 2)" uib-btn-radio="'select2'">select 2</label>
+                        <label class="btn btn-primary" style="margin-top:27px;" ng-model="radioModel" ng-click="radioClick($event, 3)" uib-btn-radio="'select3'">select 3</label>
+                        <label class="btn btn-primary" style="margin-top:27px;" ng-model="radioModel" ng-click="radioClick($event, 4)" uib-btn-radio="'select4'">select 4</label>
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <div class="btn-group-vertical">
+                        <label class="btn btn-primary" ng-model="checkModel.A" ng-click="checkClick($event, 'A')" uib-btn-checkbox>Disable A</label>
+                        <label class="btn btn-primary" style="margin-top:27px;" ng-model="checkModel.B" ng-click="checkClick($event, 'B')" uib-btn-checkbox>Disable B</label>
+                        <label class="btn btn-primary" style="margin-top:27px;" ng-model="checkModel.C" ng-click="checkClick($event, 'C')" uib-btn-checkbox>Disable C</label>
+                        <label class="btn btn-primary" style="margin-top:27px;" ng-model="checkModel.D" ng-click="checkClick($event, 'D')" uib-btn-checkbox>Disable D</label>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-danger" ng-model="resetMap" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                        Reset select
+                    </button>
+                    <button type="button" class="btn btn-success" style="margin-top: 27px;" ng-click="toggleSelectionRegionB()">
+                        Toggle Selection: region B
+                    </button>
+                </div>
+            </div>
+            <div class="row pushDown">
+                <div class="col-xs-12">
+                    <a class="link" href="https://yuvaloren6.github.io/angular-revive/">Go to <em>Revive</em> page to download the directive</a>
+                </div>
+            </div>
+        </section>
+        <section ng-controller="groupSortDemoController">
+            <div class="row pushDown">
+                <div class="col-xs-12">
+                    <h1>Group and Sort</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Group objects into categories - Sort categories and items</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div>
+                        <div group-sort objects="americanLeagueTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
+                            <grouping-tree title="American League"></grouping-tree>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h1 style="color: black; font-weight:bold">Universal Angular Select</h1>
+                </div>
+                <div class="col-xs-3">
+                    <div>
+                        <div group-sort objects="nationalLeagueTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
+                            <grouping-tree title="National League"></grouping-tree>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div>
+                        <div group-sort objects="baseballTeams" group-by="groupBy" sort-categories="sortCategories" sort-items="sortItems">
+                            <table-view height="380" width="540"></table-view>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <section ng-controller="reviveDemoController">
-                    <div class="row" style="margin-top:30px">
-                        <div class="col-xs-12">
-                            <h1>Revive</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>Turn any clickable surface in you html into a select-like control</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <p>
-                                <em>Revive</em> is a transcluding directive that enables you to turn any clickable surface in you html into a select-like control with the
-                                addition of a few events. <em>Revive</em> is ng-model enabled directive, so it is easy to incorporate it into the application model.
-                                Other capabilities of the directive are:
-                                <ul>
-                                    <li>
-                                        Control over the mode of operation (single or multiple selection) and in multiple selections mode you can limit
-                                        the number of selections.
-                                    </li>
-                                    <li>
-                                        Disable regions of the view by feeding a list of regions IDs to the directive. The list is instantly broadcast to
-                                        all descendents - giving them the chance to disable / enable themselves.
-                                    </li>
-                                    <li>
-                                        Reset the the directive and its transcluded directive from the model. If you need to start over, simply nudge the
-                                        directive through its reset property.
-                                    </li>
-                                </ul>
-                            </p>
-                            <p>
-                                Below is a simple implementation of the <em>Revive</em> directive. With the implementation of a few (4) events, it brings to live a
-                                collection of div elements that, orchestrated by <em>Revive</em>, exhibits a select-like behavior.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row pushDown">
-                        <div class="col-xs-3">
-                            <p style="margin-top: 25px; font-size:x-large">Selected regions:</p>
-                            <p style="font-size:x-large">{{mapSelections}}</p>
-                            <p style="margin-top: 25px; font-size:x-large">Number of selections: {{maxSelections}}</p>
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="map-div">
-                                <div revive ng-model="mapSelections" disabled-items="disableMapRegions" reset-select="{{resetMap}}" multiple="{{maxSelections}}">
-                                    <div ng-controller="mapController" class="map-region {{enabledStateClass}} {{selectedStateClass}}" ng-repeat="location in locations"
-                                         data-id="location.location"
-                                         ng-style="{left:location.left, top:location.top }"
-                                         ng-click="clickEvent($event, location.location)">
-                                        <div class="mapRegionTitle">
-                                            {{location.location}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-1">
-                            <div class="btn-group-vertical">
-                                <label class="btn btn-primary" ng-model="radioModel" ng-click="radioClick($event, 1)" uib-btn-radio="'select1'">select 1</label>
-                                <label class="btn btn-primary" style="margin-top:27px;" ng-model="radioModel" ng-click="radioClick($event, 2)" uib-btn-radio="'select2'">select 2</label>
-                                <label class="btn btn-primary" style="margin-top:27px;" ng-model="radioModel" ng-click="radioClick($event, 3)" uib-btn-radio="'select3'">select 3</label>
-                                <label class="btn btn-primary" style="margin-top:27px;" ng-model="radioModel" ng-click="radioClick($event, 4)" uib-btn-radio="'select4'">select 4</label>
-                            </div>
-                        </div>
-                        <div class="col-xs-1">
-                            <div class="btn-group-vertical">
-                                <label class="btn btn-primary" ng-model="checkModel.A" ng-click="checkClick($event, 'A')" uib-btn-checkbox>Disable A</label>
-                                <label class="btn btn-primary" style="margin-top:27px;" ng-model="checkModel.B" ng-click="checkClick($event, 'B')" uib-btn-checkbox>Disable B</label>
-                                <label class="btn btn-primary" style="margin-top:27px;" ng-model="checkModel.C" ng-click="checkClick($event, 'C')" uib-btn-checkbox>Disable C</label>
-                                <label class="btn btn-primary" style="margin-top:27px;" ng-model="checkModel.D" ng-click="checkClick($event, 'D')" uib-btn-checkbox>Disable D</label>
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            <button type="button" class="btn btn-danger" ng-model="resetMap" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
-                                Reset select
-                            </button>
-                            <button type="button" class="btn btn-success" style="margin-top: 27px;" ng-click="toggleSelectionRegionB()">
-                                Toggle Selection: region B
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row pushDown">
-                        <div class="col-xs-12">
-                            <a class="link" href="https://yuvaloren6.github.io/angular-revive/">Goto <em>Revive</em> page to download the directive</a>
-                        </div>
-                    </div>
-                </section>
-                <section ng-controller="groupSortDemoController">
-                    <div class="row pushDown">
-                        <div class="col-xs-12">
-                            <h1>Group and Sort</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>Group objects into categories - Sort categories and items</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <div>
-                                <div group-sort objects="americanLeageTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
-                                    <grouping-tree title="American League"></grouping-tree>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <div>
-                                <div group-sort objects="nationalLeageTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
-                                    <grouping-tree title="National League"></grouping-tree>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pushDown">
-                        <div class="col-xs-12">
-                            <p>
-                                <em>Group and Sort</em> is another transcluding directive that lets you group a set of objects into categories and sub categories. You can
-                                create as many levels of categories and sub categories as you need. Your objects need not be fully categorised, i.e. you can have
-                                objects at the same level as sub categories. Categorising objects is done by a callback - so there is no holding you back on grouping
-                                your objects any way you want.
-                            </p>
-                            <p>
-                                Once you are done grouping objects into categories, you can sort categories and items, so they are ready to be consumed by your
-                                representational directive. Sorting of categories and items is done by callbacks, too - so, you can easily sort categories and items
-                                in a way most suitable for your needs
-                            </p>
-                            <p>
-                                The dropdown menus above, demonstrate 2-level grouping and sorting. Professional Baseball teams are categorised into confrences
-                                (leagues) and then into divisions (Sub categorised). Finally, categories and teams (in each division) are sorted in ascending alphabetic order.
-                            </p>
-                            <p>
-                                If this were a sporting site, a more suitable sorting of divisions would be geographically, while teams would be sorted by wins. This, too,
-                                can easily acheived by <em>the Group and Sort</em>.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row pushDown">
-                        <div class="col-xs-12">
-                            <a class="link" href="https://yuvaloren6.github.io/angular-groupSort/">Goto <em>Group and Sort</em> page to download the directive</a>
-                        </div>
-                    </div>
-                </section>
-                <section ng-controller="universalSelectDemoController">
-                    <div class="row pushDown">
-                        <div class="col-xs-12">
-                            <h1>Universal Select</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>Create awesome imaginative select directives</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <p>
-                                The <em>Universal Angular Select</em> is not a directive into itself, but a composition of the <em>Revive</em> and
-                                <em>Group and Sort</em> directives with a representional directive with your choice. The composition of the two directives
-                                provides you with a powerfull <em>Select</em> directive.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5">
-                            <span>Favorite American league team: </span>
-                            <img ng-show="1 <= ALSelection" ng-src="{{(baseballTeams | filter:{ id: ALSelection })[0].icon}}" height="16" width="16" />
-                            <b><span ng-bind="(baseballTeams | filter:{ id: ALSelection })[0].name"></span></b>
-                        </div>
-                        <div class="col-xs-6">
-                            <span>Favorite National league team: </span>
-                            <img ng-show="1 <= NLSelection" ng-src="{{(baseballTeams | filter:{ id: NLSelection })[0].icon}}" height="16" width="16" />
-                            <b><span ng-bind="(baseballTeams | filter:{ id: NLSelection })[0].name"></span></b>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5" style="margin-top:10px">
-                            <div>
-                                <div revive ng-model="ALSelection">
-                                    <div group-sort objects="americanLeageTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
-                                        <fancy-combobox title="American League"></fancy-combobox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3" style="margin-top:10px">
-                            <div>
-                                <div revive ng-model="NLSelection">
-                                    <div group-sort objects="nationalLeageTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
-                                        <fancy-combobox title="National League"></fancy-combobox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pushDown">
-                        <div class="col-xs-12">
-                            <p>
-                                The <em>Universal Angular Select</em> is not a directive into itself, but a composition of the <em>Revive</em> and
-                                <em>Group and Sort</em> directives with a representional directive with your choice. The composition of the two directives
-                                provides you with a powerfull <em>Select</em> directive.
-                            </p>
-                            <p>
-                                Advantages of using the <em>Universal Angular Select</em>
-                                <ul>
-                                    <li>
-                                        You are no longer bound by the representation constraint of the standard Select directive.
-                                    </li>
-                                    <li>
-                                        Your awesome imaginative select directive need only care about representation logic.
-                                    </li>
-                                    <li>
-                                        ngModel bound - with no additional development!
-                                    </li>
-                                    <li>
-                                        Customised grouping and sorting.
-                                    </li>
-                                    <li>
-                                        Enhanched selectable logic:
-                                        <ul>
-                                            <li>
-                                                Set maximal number of selctions.
-                                            </li>
-                                            <li>
-                                                Enable / disable items.
-                                            </li>
-                                            <li>
-                                                Reset state of Select and underline directives.
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
-                </section>
+            <div class="row pushDown">
+                <div class="col-xs-12">
+                    <p>
+                        <em>Group and Sort</em> is another transcluding directive that lets you group a set of objects into categories and sub categories. You can
+                        create as many levels of categories and sub categories as you need. Your objects need not be fully categorised, i.e. you can have
+                        objects at the same level as sub categories. Categorising objects is done by a callback - so there is no holding you back on grouping
+                        your objects any way you want.
+                    </p>
+                    <p>
+                        Once you are done grouping objects into categories, you can sort categories and items, so they are ready to be consumed by your
+                        representational directive. Sorting of categories and items is done by callbacks, too - so, you can easily sort categories and items
+                        in a way most suitable for your needs
+                    </p>
+                    <p>
+                        The dropdown menus above, demonstrate 2-level grouping and sorting. Professional Baseball teams are categorised into confrences
+                        (leagues) and then into divisions (Sub categorised). Finally, categories and teams (in each division) are sorted in ascending alphabetic
+                        order. On the left you can also see the leagues in table view.
+                    </p>
+                    <p>
+                        If this were a sporting site, a more suitable sorting of divisions would be geographically, while teams would be sorted by wins. This, too,
+                        can easily acheived by <em>the Group and Sort</em>.
+                    </p>
+                </div>
             </div>
-        </body>
+            <div class="row pushDown">
+                <div class="col-xs-12">
+                    <a class="link" href="https://yuvaloren6.github.io/angular-groupSort/">Go to <em>Group and Sort</em> page to download the directive</a>
+                </div>
+            </div>
+        </section>
+        <section ng-controller="universalSelectDemoController">
+            <div class="row pushDown">
+                <div class="col-xs-12">
+                    <h1>Universal Select</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Create awesome imaginative select directives</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>
+                        The <em>Universal Angular Select</em> is not a directive into itself, but a composition of the <em>Revive</em> and
+                        <em>Group and Sort</em> directives with a representional directive of your choice. The composition of the two directives
+                        provides you with a powerfull <em>Select</em> directive.
+                    </p>
+                    <p>
+                        Below are three different Combobxes implementations, all were created using the <em>Universal Angular Select</em>. The two on
+                        the right are conventional comboboxes, while the one on the left is an example of non-conventional select that can be easily created
+                        by combining the <em>Revive</em> and <em>Group and Sort</em> directives into a <em>Universal Angular Select</em>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <span>My favorite Baseball team: </span>
+                </div>
+                <div class="col-xs-3">
+                    <span>Favorite American league team: </span>
+                </div>
+                <div class="col-xs-3">
+                    <span>Favorite National league team: </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <img ng-show="starSelection" ng-src="{{(baseballTeams | filter:{ id: starSelection })[0].icon}}" height="16" width="16" />
+                    <b><span ng-show="starSelection" ng-bind="(baseballTeams | filter:{ id: starSelection })[0].name"></span></b>
+                </div>
+                <div class="col-xs-3">
+                    <img ng-show="ALSelection" ng-src="{{(americanLeagueTeams | filter:{ id: ALSelection })[0].icon}}" height="16" width="16" />
+                    <b><span ng-show="ALSelection" ng-bind="(americanLeagueTeams | filter:{ id: ALSelection })[0].name"></span></b>
+                </div>
+                <div class="col-xs-3">
+                    <img ng-show="NLSelection" ng-src="{{(nationalLeagueTeams | filter:{ id: NLSelection })[0].icon}}" height="16" width="16" />
+                    <b><span ng-show="NLSelection" ng-bind="(nationalLeagueTeams | filter:{ id: NLSelection })[0].name"></span></b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6" style="margin-top:10px">
+                    <div>
+                        <div revive ng-model="starSelection">
+                            <div group-sort objects="baseballTeams" group-by="groupBy" sort-categories="sortCategories" sort-items="sortItems">
+                                <star-combobox height="380" width="600"></star-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3" style="margin-top:10px">
+                    <div>
+                        <div revive ng-model="ALSelection">
+                            <div group-sort objects="americanLeagueTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
+                                <fancy-combobox title="American League"></fancy-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3" style="margin-top:10px">
+                    <div>
+                        <div revive ng-model="NLSelection">
+                            <div group-sort objects="nationalLeagueTeams" group-by="groupByConference" sort-categories="sortCategories" sort-items="sortItems">
+                                <fancy-combobox title="National League"></fancy-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pushDown">
+                <div class="col-xs-12">
+                    <p>
+                        The <em>Universal Angular Select</em> is not a directive into itself, but a composition of the <em>Revive</em> and
+                        <em>Group and Sort</em> directives with a representional directive with your choice. The composition of the two directives
+                        provides you with a powerfull <em>Select</em> directive.
+                    </p>
+                    <p>
+                        Advantages of using the <em>Universal Angular Select</em>
+                        <ul>
+                            <li>
+                                You are no longer bound by the representational constraint of the standard Select directive.
+                            </li>
+                            <li>
+                                Your awesome imaginative select directive need only care about representation logic.
+                            </li>
+                            <li>
+                                ngModel bound - with no additional development!
+                            </li>
+                            <li>
+                                Customised grouping and sorting.
+                            </li>
+                            <li>
+                                Enhanched selectable logic:
+                                <ul>
+                                    <li>
+                                        Set maximal number of selctions.
+                                    </li>
+                                    <li>
+                                        Enable / disable items.
+                                    </li>
+                                    <li>
+                                        Reset state of Select and underline directives.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
 </html>

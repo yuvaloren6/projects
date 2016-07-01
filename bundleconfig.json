@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "grouping/tableView.min.js",
+    "inputFiles": [
+      "grouping/tableView.js"
+    ]
+  },
+  {
+    "outputFileName": "UniversalSelect/starCombobox.min.js",
+    "inputFiles": [
+      "UniversalSelect/starCombobox.js"
+    ]
+  }
+]

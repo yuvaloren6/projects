@@ -1,6 +1,6 @@
 ﻿/// <reference path="bower_components/angular/angular.js" />
 
-angular.module('groupingTree', ['angular-groupSort'])
+angular.module('groupingDirectives', ['angular-groupSort'])
 .directive('groupingTree', function () {
     return {
         scope : {
@@ -13,7 +13,7 @@ angular.module('groupingTree', ['angular-groupSort'])
                                 <span class="caret"></span> \
                                 <span class="sr-only">Split button!</span> \
                                 </button> \
-                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button"> \
+                                <ul style="min-width:220px" class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button"> \
                                     <categories ng-repeat="group in groups.objects" category="group"></categories></ul> \
                            </div>',
         restrict: 'E',
